@@ -206,10 +206,12 @@ export function getCoverageReport(options: Options): CoverageReport {
 
     const txtContent = getContentFile(coverageFile)
     const coverageArr = parseCoverage(txtContent)
-
     if (coverageArr) {
       const coverage = getCoverage(coverageArr)
-      const coverageHtml = coverageToMarkdown(coverageArr, options)
+      const coverageHtml =
+        coverage.statements !== 0
+          ? coverageToMarkdown(coverageArr, options)
+          : ''
 
       return { ...coverage, coverageHtml }
     }

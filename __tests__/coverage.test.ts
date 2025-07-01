@@ -19,6 +19,14 @@ describe('get coverage report', () => {
     summaryFile: `${__dirname}/../data/coverage_1/coverage-summary.json`,
   }
 
+  test('empty coverage', () => {
+    const report = getCoverageReport({
+      ...options,
+      coverageFile: `${__dirname}/../data/coverage_1/empty-coverage.txt`,
+    })
+    expect(report.coverageHtml).toBe('')
+  })
+
   test('should return coverage report', () => {
     const {
       coverageHtml,
@@ -29,6 +37,7 @@ describe('get coverage report', () => {
       lines,
       statements,
     } = getCoverageReport(options)
+    console.log(coverageHtml)
 
     expect(lines).toBe(coverage)
     expect(coverage).toBe(71)

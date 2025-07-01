@@ -326,7 +326,9 @@ function getCoverageReport(options) {
         const coverageArr = (0, parse_coverage_1.parseCoverage)(txtContent);
         if (coverageArr) {
             const coverage = getCoverage(coverageArr);
-            const coverageHtml = coverageToMarkdown(coverageArr, options);
+            const coverageHtml = coverage.statements !== 0
+                ? coverageToMarkdown(coverageArr, options)
+                : '';
             return { ...coverage, coverageHtml };
         }
     }
@@ -1139,6 +1141,9 @@ function summaryToMarkdown(summary, options, withoutHeader = false) {
     const { repository, commit, badgeTitle, serverUrl = 'https://github.com', summaryTitle, } = options;
     const { statements, functions, branches } = summary;
     const { color, coverage } = getCoverage(summary);
+    if (isNaN(coverage)) {
+        return `<b>There are no changed files included on coverage scope</b>`;
+    }
     const readmeHref = `${serverUrl}/${repository}/blob/${commit}/README.md`;
     const badge = `<a href="${readmeHref}"><img alt="${badgeTitle}: ${coverage}%" src="https://img.shields.io/badge/${badgeTitle}-${coverage}%25-${color}.svg" /></a><br/>`;
     const tableHeader = '| Lines | Statements | Branches | Functions |\n' +
