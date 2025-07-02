@@ -156,7 +156,7 @@ describe('summary to markdown', () => {
     const emptySummary = parseSummary(content)!
     const parsedSummary = summaryToMarkdown(emptySummary, emptyOption, true)
     expect(parsedSummary).toBe(
-      '<b>There are no changed files included on coverage scope</b>'
+      `<b>There isn't any  changed files included on coverage scope</b>`
     )
   })
 })
